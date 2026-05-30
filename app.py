@@ -18,7 +18,7 @@ def create_task():
     task_id_control += 1
     tasks.append(new_task)
     print(tasks)
-    return jsonify({"message": "Nova tarefa criada com sucesso"})
+    return jsonify({"message": "Nova tarefa criada com sucesso","id": new_task.id})
 
 
 @app.route('/tasks', methods=['GET'])
@@ -60,7 +60,10 @@ def update_task(id):
 
     print(task)
 
-    return jsonify(task.to_dict(),{'message': 'tarefa atualiza com sucesso'})   
+    return jsonify({
+        'message': 'Tarefa atualizada com sucesso',
+        'task': task.to_dict()
+        })   
 
 
 @app.route('/tasks/<int:id>', methods=['DELETE'])
@@ -70,7 +73,10 @@ def delete_task(id):
        if t.id == id:
            task = t
            tasks.remove(t)
-           return jsonify(task.to_dict(),{'message': 'Tarefa deleta com sucesso'})   
+           return jsonify({
+               'message': 'Tarefa deletada com sucesso',
+               'task': task.to_dict()
+               })     
     
     return jsonify({'message': 'Não foi possível encontrar a atividade'}),404
 
